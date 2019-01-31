@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+    <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+
+    <!-- Web Font / @font-face : BEGIN -->
+    <!-- NOTE: If web fonts are not required, lines 10 - 27 can be safely removed. -->
+
+    <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
+    <!--[if mso]>
+    <style>
+        * {
+            font-family: sans-serif !important;
+        }
+    </style>
+    <![endif]-->
+
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!--[if !mso]><!-->
+    <!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <!--<![endif]-->
+
+    <!-- Web Font / @font-face : END -->
+
+    <!-- CSS Reset : BEGIN -->
+    <style>
+
+        /* What it does: Remove spaces around the email design added by some email clients. */
+        /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+        html,
+        body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        /* What it does: Stops email clients resizing small text. */
+        * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* What it does: Centers email on Android 4.4 */
+        div[style*="margin: 16px 0"] {
+            margin: 0 !important;
+        }
+
+        /* What it does: Stops Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+
+        /* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+        table {
+            border-spacing: 0 !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            margin: 0 auto !important;
+        }
+        table table table {
+            table-layout: auto;
+        }
+
+        /* What it does: Uses a better rendering method when resizing images in IE. */
+        img {
+            -ms-interpolation-mode:bicubic;
+        }
+
+        /* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+        a {
+            text-decoration: none;
+        }
+
+        /* What it does: A work-around for email clients meddling in triggered links. */
+        *[x-apple-data-detectors],  /* iOS */
+        .unstyle-auto-detected-links *,
+        .aBn {
+            border-bottom: 0 !important;
+            cursor: default !important;
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+        .a6S {
+            display: none !important;
+            opacity: 0.01 !important;
+        }
+
+        /* What it does: Prevents Gmail from changing the text color in conversation threads. */
+        .im {
+            color: inherit !important;
+        }
+
+        /* If the above doesn't work, add a .g-img class to any image in question. */
+        img.g-img + div {
+            display: none !important;
+        }
+
+        /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+        /* Create one of these media queries for each additional viewport size you'd like to fix */
+
+        /* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+        @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+            u ~ div .email-container {
+                min-width: 320px !important;
+            }
+        }
+        /* iPhone 6, 6S, 7, 8, and X */
+        @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+            u ~ div .email-container {
+                min-width: 375px !important;
+            }
+        }
+        /* iPhone 6+, 7+, and 8+ */
+        @media only screen and (min-device-width: 414px) {
+            u ~ div .email-container {
+                min-width: 414px !important;
+            }
+        }
+
+    </style>
+    <!-- CSS Reset : END -->
+    <!-- Reset list spacing because Outlook ignores much of our inline CSS. -->
+    <!--[if mso]>
+    <style type="text/css">
+        ul,
+        ol {
+            margin: 0 !important;
+        }
+        li {
+            margin-left: 30px !important;
+        }
+        li.list-item-first {
+            margin-top: 0 !important;
+        }
+        li.list-item-last {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <![endif]-->
+
+    <!-- Progressive Enhancements : BEGIN -->
+    <style>
+
+        /* What it does: Hover styles for buttons */
+        .button-td,
+        .button-a {
+            transition: all 100ms ease-in;
+        }
+        .button-td-primary:hover,
+        .button-a-primary:hover {
+            background: #555555 !important;
+            border-color: #555555 !important;
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 600px) {
+
+            /* What it does: Adjust typography on small screens to improve readability */
+            .email-container p {
+                font-size: 17px !important;
+            }
+
+        }
+
+    </style>
+    <!-- Progressive Enhancements : END -->
+
+    <!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+
+</head>
+<!--
+	The email background color (#222222) is defined in three places:
+	1. body tag: for most email clients
+	2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
+	3. mso conditional: For Windows 10 Mail
+-->
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #e6ebef;">
+<center style="width: 100%; background-color: #e6ebef;">
+    <!--[if mso | IE]>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #222222;">
+        <tr>
+            <td>
+    <![endif]-->
+
+    <!-- Visually Hidden Preheader Text : BEGIN -->
+    <!--<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">-->
+        <!--(Optional) This text will appear in the inbox preview, but not the email body. It can be used to supplement the email subject line or even summarize the email's contents. Extended text preheaders (~490 characters) seems like a better UX for anyone using a screenreader or voice-command apps like Siri to dictate the contents of an email. If this text is not included, email clients will automatically populate it using the text (including image alt text) at the start of the email's body.-->
+    <!--</div>-->
+    <!-- Visually Hidden Preheader Text : END -->
+
+    <!-- Create white space after the desired preview text so email clients don’t pull other distracting text into the inbox preview. Extend as necessary. -->
+    <!-- Preview Text Spacing Hack : BEGIN -->
+    <!--<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">-->
+        <!--&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;-->
+    <!--</div>-->
+    <!-- Preview Text Spacing Hack : END -->
+
+    <!--
+        Set the email width. Defined in two places:
+        1. max-width for all clients except Desktop Windows Outlook, allowing the email to squish on narrow but never go wider than 600px.
+        2. MSO tags for Desktop Windows Outlook enforce a 600px width.
+    -->
+    <div style="max-width: 600px; margin: 0 auto;" class="email-container">
+        <!--[if mso]>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600">
+            <tr>
+                <td>
+        <![endif]-->
+
+        <!-- Email Body : BEGIN -->
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 auto;">
+            <!-- Email Header : BEGIN -->
+            <tr>
+                <td style="padding: 10px 0 0 0; text-align: center; font-family: Helvetica;">
+                    <!--<img src="https://via.placeholder.com/200x50" width="200" height="50" alt="alt_text" border="0" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">-->
+                    <h1 style="color: #222222; margin-top: 0; margin-bottom: 0">AI社区月刊</h1>
+                    <p style="text-align:center; color: #222222; margin-top: 0">2019.01</p>
+                </td>
+            </tr>
+            <!-- Email Header : END -->
+
+            <!-- Hero Image, Flush : BEGIN -->
+            <tr>
+                <td style="background-color: #ffffff;">
+                    <img src="http://www.spadeworx.com/wp-content/uploads/2016/07/Artificial_Intel_Banner.jpg" width="600" height="" alt="alt_text" border="0" style="width: 100%; max-width: 600px; height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: auto;" class="g-img">
+                </td>
+            </tr>
+            <!-- Hero Image, Flush : END -->
+
+            <!-- 1 Column Text + Button : BEGIN -->
+            <tr>
+                <td style="background-color: #ffffff;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr style="border-bottom: 1px solid #EAEAEA;">
+                            <td style="padding: 20px; font-family: Helvetica; font-size: 15px; line-height: 20px; color: #555555;">
+                                <!--<h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 25px; line-height: 30px; color: #333333; font-weight: normal;">Praesent laoreet malesuada&nbsp;cursus.</h1>-->
+                                <p style="margin: 0; font-family:  Helvetica; color: #222222;font-size: 12px;font-style: italic;">AI Community是由一群对深度学习等人工智能相关技术有热情的小伙伴们组成的社区。</p>
+                                <p style="margin: 0; font-family: sans-serif; color: #222222;font-size: 12px;font-style: italic;">我们希望提供一个平台，持续关注机器学习、人工智能领域的最新发展，并帮助大家构建与此相关的工程实践能力。欢迎大家加入我们。</p>
+                                <!--<p style="margin: 0; font-family: sans-serif; color: #222222;font-size: 12px;font-style: italic;">欢迎大家加入我们。</p>-->
+                            </td>
+                        </tr>
+                        <!--<tr>-->
+                            <!--<td style="padding: 0 20px;">-->
+                                <!--&lt;!&ndash; Button : BEGIN &ndash;&gt;-->
+                                <!--<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">-->
+                                    <!--<tr>-->
+                                        <!--<td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">-->
+                                            <!--<a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px;">Primary Button</a>-->
+                                        <!--</td>-->
+                                    <!--</tr>-->
+                                <!--</table>-->
+                                <!--&lt;!&ndash; Button : END &ndash;&gt;-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <tr style="border-bottom: 1px solid #EAEAEA;">
+                            <td style="padding: 20px; font-family: Helvetica; font-size: 16px; line-height: 20px; color: #555555;">
+                                <h2 style="margin: 0 0 10px 0; font-family:  Helvetica; font-size: 18px; line-height: 22px; color: #333333; font-weight: bold;">招募</h2>
+                                <!--<ul style="padding: 0; margin: 0 0 10px 0; list-style-type: disc;">-->
+                                    <!--<li style="margin:0 0 10px 30px;" class="list-item-first">A list item.</li>-->
+                                    <!--<li style="margin:0 0 10px 30px;">Another list item here.</li>-->
+                                    <!--<li style="margin: 0 0 0 30px;" class="list-item-last">Everyone gets a list item, list items for everyone!</li>-->
+                                <!--</ul>-->
+                                <p style="color: #808080; font-family:  Helvetica; font-size: 14px;">目前的数字化转型已经进入了数据驱动，智能驱动的时代，但是这里面很大的Gap是业务人员不懂技术，技术人员不懂业务，如何发现业务价值，将人工智能技术和数据应用到合适的场景，是每个企业所需要的。 所以AI规划师的角色会是非常热门的岗位。 因AI规划项目需要咨询架构师，凯哥特在9月26号开了AI规划能力建设招募解说会，详细介绍了背景和挑战以及AI规划师的职责，交付内容和能力要求。感兴趣的朋友可以联系mqgong@thoughtworks.com</p>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #EAEAEA;">
+                            <td style="padding: 20px; font-family: Helvetica; font-size: 16px; line-height: 10px; color: #808080;">
+                                <h2 style="margin: 0 0 20px 0; font-family:  Helvetica; font-size: 18px; line-height: 22px; color: #333333; font-weight: bold;">社区活动</h2>
+                                <p style="color: #808080; font-family:  Helvetica; font-size: 14px; color: #808080;">社区分享本月持续进行中：</p>
+                                <ul style="padding: 0; margin: 0 0 10px 0; list-style-type: none;">
+                                    <li style="margin:0 0 10px 30px;" class="list-item-first"></li>
+                                    <p style="color: #808080; font-family:  Helvetica; font-size: 14px; color: #808080;">【如何成功交付一个机器学习项目？】</p>
+                                    <li style="margin:0 0 10px 30px;" class="list-item-first">
+                                        <p style="color: #808080; font-family:  Helvetica; line-height: 18px; font-size: 14px; color: #808080;">廖光明 在办公室内部分享了近几次机器学习项目交付的经验 <a href="https://pse.is/EQMWR" style="margin-left: 10px; text-decoration: none;" target="_blank">点我观看</a></p>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- 1 Column Text + Button : END -->
+
+            <!-- 2 Even Columns : BEGIN -->
+            <tr style="border-bottom: 1px solid #EAEAEA;">
+                <td height="100%" valign="top" width="100%" style="padding: 20px 20px 40px 20px; background-color: #ffffff;">
+                    <h2 style="margin: 0 0 20px 0; font-family:  Helvetica; font-size: 18px; line-height: 22px; color: #333333; font-weight: bold;">
+                        我们关注的AI前沿</h2>
+                    <h3 style="margin: 0 0 20px 0; font-family:  Helvetica; font-size: 16px; line-height: 22px; color: #333333; font-weight: bold;">
+                    在星际争霸中战胜职业玩家的AI</h3>
+                    <p style="color: #808080; font-family:  Helvetica; font-size: 14px;">强化学习以模拟人类的决策方式构建，被认为是实现通用人工智能的最关键一步。我们已经见识过它可以把Atari的游戏玩得比人类还溜，在下象棋领域战胜了人类的顶尖高手。但是在复杂的RTS游戏上面强化学习的表现却一直有待突破，主要原因在于这样的复杂游戏里面，状态空间和行动空间都巨大无比，而且非常依赖长时记忆和推理，这给机器学习模型带来了巨大的挑战。终于，DeepMind的模型在最近的星际争霸挑战赛中战胜了职业选手，引起了业界的震动。这个强大的智能体究竟是靠强大的微操能力，还是靠战略赢得的游戏呢？请看这几篇解读文章：（论文还未放出）</p>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:560px;">
+                        <tr>
+                            <td valign="top" width="50%">
+                                <a href="https://pse.is/EFRWK" style="text-decoration: none;" target="_blank">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px; text-align: left;">
+                                    <tr>
+                                        <td style="text-align: center; padding: 0 10px;min-height: 200px;">
+                                            <img src="https://mmbiz.qpic.cn/mmbiz_gif/KmXPKA19gWibRgAEAoeT8OTIvMWHoxDCeWo8v6liaJI5fOPxrHCCYh9l1UOp33wIcIKK6nicFubeNIDQfZVomHMWg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1" width="200" alt="alt_text" border="0" style="width: 100%; max-width: 200px; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; color: #222222; font-family: Helvetica; font-size: 14px; line-height: 20px; padding: 10px 10px 0;">
+                                            <p style="margin: 0;text-align: center;">DeepMind AlphaStar星际争霸2首秀</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; color: #808080;font-style: italic; font-family: Helvetica; font-size: 12px; line-height: 20px; padding: 10px 10px 0;">
+                                            <p style="margin: 0;">两年前，DeepMind 曾宣布开始研究打即时战略游戏《星际争霸 2》的人工智能，今天，AlphaStar 终于首次亮相在世人眼前。在对阵人类职业玩家、前 WCS 亚军 MaNa 的一场比赛中，人工智能却被人类「狡诈」的战术迷惑，输给了对手。</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </a>
+                            </td>
+                            <td valign="top" width="50%">
+                                <a href="https://pse.is/ENVR7" style="text-decoration: none;"  target="_blank">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px; text-align: left;">
+                                    <tr>
+                                        <td style="text-align: center; padding: 0 10px;">
+                                            <img src="https://mmbiz.qpic.cn/mmbiz_jpg/KmXPKA19gWicFbZZoYFiaaoVfBL9P5wibicPqhiaNyP6RiaHXAdGsu0HOuibqr3aHasYibsic8HGmzibiaVEDlsNyBGxlYGdw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" width="200" alt="alt_text" border="0" style="width: 100%; max-width: 200px; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; color: #222222; font-family: Helvetica; font-size: 14px; line-height: 20px; padding: 10px 10px 0;">
+                                            <p style="margin: 0;text-align: center;">DeepMind科学家揭秘</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; color: #808080;font-style: italic; font-family: Helvetica; font-size: 12px; line-height: 20px; padding: 10px 10px 0;">
+                                            <p style="margin: 0;">虽然之前在内部比赛中 AI 十战十胜，但现场比赛中，MaNa 机智地戏耍了对手，为人类取得了一场胜利。赛后，DeepMind 科学家、AlphaStar 项目的领导者 Oriol Vinyals 和 David Silver 在 Reddit 上回答了人们关心的很多问题。</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:560px;">
+                        <tr>
+                            <td valign="top" width="50%">
+                                <a href="https://pse.is/DUM9X" style="text-decoration: none;" target="_blank">
+                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px; text-align: left;">
+                                        <tr>
+                                            <td style="text-align: center; padding: 0 10px;">
+                                                <img src="https://mmbiz.qpic.cn/mmbiz_png/KmXPKA19gW8YngRQr9Bjiao7RsfLHwvP7YibxfiblEm5Dcuhw0TbRicy3MiaykA38iaW9WlbgAVFUZ8kuBtbku1DYf6Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" width="200" alt="alt_text" border="0" style="width: 100%; max-width: 200px; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; color: #222222; font-family: Helvetica; font-size: 14px; line-height: 20px; padding: 10px 10px 0;">
+                                                <p style="margin: 0;text-align: center;">AlphaStar是否在作弊</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; color: #808080;font-style: italic; font-family: Helvetica; font-size: 12px; line-height: 20px; padding: 10px 10px 0;">
+                                                <p style="margin: 0;">近日，Aleksi Pietikäinen 在 Medium 上发表了文章，提出了几点疑问，在 Twitter 和 Reddit 上引起了极大的关注：AlphaStar 使用了超人的速度，达到了超人的准确度。</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </a>
+                            </td>
+                            <td valign="top" width="50%">
+                            </td>
+                        </tr>
+                    </table>
+                    <p></p>
+                    <p></p>
+                    <h3 style="margin: 0 0 20px 0; font-family:  Helvetica; font-size: 16px; line-height: 22px; color: #333333; font-weight: bold;">
+                    处理图数据结构的深度网络</h3>
+                    <p style="color: #808080; font-family:  Helvetica; font-size: 14px;">图作为表达能力很强的通用的数据结构，可以用来刻画现实世界中的很多问题，例如社交场景的用户网络、电商场景的用户和商品网络、电信场景的通信网络、金融场景的交易网络和医疗场景的药物分子网络等等。广义上说，没有一个点的特征表达是孤立的；丰富特征的一个重要手段必然是融合该点和其他邻居点的互动。从这个意义上来说，CNN和RNN分别把空间和时间上的相邻点看作互动对象是非常粗糙的。把图和深度学习结合的意义正在于突破这个局限。小到分子结构图，大到知识图谱、社交网络和推荐系统，图神经网络正在展现强大的应用潜力。</p>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:560px;">
+                        <tr>
+                            <td valign="top" width="50%">
+                                <a href="https://pse.is/E7FY8" style="text-decoration: none;" target="_blank">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px; text-align: left;">
+                                    <tr>
+                                        <td style="text-align: center; padding: 0 10px;min-height: 200px;">
+                                            <img src="https://mmbiz.qpic.cn/mmbiz_png/KmXPKA19gWibiaV87Z36x7bhhtHI8tib9FCzNTzH1iamLrmjAaXfTf5njMo5R2ko8ApIKMRX9mHnNHDn8ibLYyLTyAg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" width="200" alt="alt_text" border="0" style="width: 100%; max-width: 200px; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; color: #222222; font-family: Helvetica; font-size: 14px; line-height: 20px; padding: 10px 10px 0;">
+                                            <p style="margin: 0;text-align: center;">来自IEEE Fellow的GNN综述</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; color: #808080;font-style: italic; font-family: Helvetica; font-size: 12px; line-height: 20px; padding: 10px 10px 0;">
+                                            <p style="margin: 0;">这篇文章介绍了 GNN 的背景知识、发展历史、分类与框架、应用等，详细介绍了各种模型与方法，包括公式、模型图示、算法等，希望对大家有所帮助。</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </a>
+                            </td>
+                            <td valign="top" width="50%">
+                                <a href="https://pse.is/E44LA" style="text-decoration: none;"  target="_blank">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px; text-align: left;">
+                                    <tr>
+                                        <td style="text-align: center; padding: 0 10px;">
+                                            <img src="https://mmbiz.qpic.cn/mmbiz_png/VBcD02jFhgn7zY46aAqjLJkHPqmShn4ialicEbDyguJaSWhvav1Xev3ibgXgicrjQQrTWHNdc4yx1Y13vN9xezeINg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" width="200" alt="alt_text" border="0" style="width: 100%; max-width: 200px; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; color: #222222; font-family: Helvetica; font-size: 14px; line-height: 20px; padding: 10px 10px 0;">
+                                            <p style="margin: 0;text-align: center;">清华大学图神经网络综述</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; color: #808080;font-style: italic; font-family: Helvetica; font-size: 12px; line-height: 20px; padding: 10px 10px 0;">
+                                            <p style="margin: 0;">虽然之前在内部比赛中 AI 十战十胜，但现场比赛中，MaNa 机智地戏耍了对手，为人类取得了一场胜利。赛后，DeepMind 科学家、AlphaStar 项目的领导者 Oriol Vinyals 和 David Silver 在 Reddit 上回答了人们关心的很多问题。</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:560px;">
+                        <tr>
+                            <td valign="top" width="50%">
+                                <a href="https://pse.is/DT2JK" style="text-decoration: none;" target="_blank">
+                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px; text-align: left;">
+                                        <tr>
+                                            <td style="text-align: center; padding: 0 10px;">
+                                                <img src="https://mmbiz.qpic.cn/mmbiz_png/KmXPKA19gWicdyrhJuLrTszLqedcuG68EPIEjFAYu9jkkNXuTpu3SJM1RK309X8Hbp5icI2Wke9RSoqicmuT0OUPQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" width="200" alt="alt_text" border="0" style="width: 100%; max-width: 200px; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; color: #222222; font-family: Helvetica; font-size: 14px; line-height: 20px; padding: 10px 10px 0;">
+                                                <p style="margin: 0;text-align: center;">NYU、AWS联合推出：全新图神经网络框架DGL</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; color: #808080;font-style: italic; font-family: Helvetica; font-size: 12px; line-height: 20px; padding: 10px 10px 0;">
+                                                <p style="margin: 0;">一个很现实的问题是如何设计「既快又好」的深度神经网络？也许更加动态和稀疏的模型会是答案所在。可见，不论是数据还是模型，「图」应该成为一个核心概念。基于这些思考，我们开发了 Deep Graph Library（DGL），一款面向图神经网络以及图机器学习的全新框架。</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </a>
+                            </td>
+                            <td valign="top" width="50%">
+                                <a href="https://pse.is/DZCZR" style="text-decoration: none;"  target="_blank">
+                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px; text-align: left;">
+                                        <tr>
+                                            <td style="text-align: center; padding: 0 10px;">
+                                                <img src="https://mmbiz.qpic.cn/mmbiz_png/KmXPKA19gWibwNYgPAdDvg21Oic3HzCEk3bP024uSDbYsqlb1ia6UOGVwT86D6aKEXtmVQyemVE66iaBR3NIWRdCeA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" width="200" height="200" alt="alt_text" border="0" style="width: 100%; max-width: 200px; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; color: #222222; font-family: Helvetica; font-size: 14px; line-height: 20px; padding: 10px 10px 0;">
+                                                <p style="margin: 0;">阿里妈妈开源工业级图深度学习框架Euler</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; color: #808080;font-style: italic; font-family: Helvetica; font-size: 12px; line-height: 20px; padding: 10px 10px 0;">
+                                                <p style="margin: 0;">今日，阿里妈妈宣布开源图深度学习框架 Euler。阿里妈妈表示，这是国内首个在核心业务大规模应用后开源的图深度学习框架。此次开源，Euler 内置了大量的算法供用户直接使用，相关代码已经可在 GitHub 上进行下载。</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- Two Even Columns : END -->
+            <!-- 1 Column Text + Button : BEGIN -->
+            <tr>
+                <td style="background-color: #ffffff;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr style="border-bottom: 1px solid #EAEAEA;">
+                            <td style="padding: 20px; font-family: Helvetica; font-size: 16px; line-height: 20px; color: #555555;">
+                                <h2 style="margin: 0 0 10px 0; font-family:  Helvetica; font-size: 18px; line-height: 22px; color: #333333; font-weight: bold;">学习资料</h2>
+                                <ul style="padding: 0; margin: 0 0 10px 0; list-style-type: none;">
+                                    <p style="color: #222222; font-family:  Helvetica; font-weight: bold; line-height: 18px; font-size: 14px;">【教程】 深度强化学习入门</p>
+                                    <li style="margin:0 0 10px 30px;" class="list-item-first">
+                                        <p style="color: #808080; font-family:  Helvetica;line-height: 14px; font-size: 12px;">麦吉尔大学、谷歌大脑和 Facebook 的多位研究者在 arXiv 发布了 140 页的《深度强化学习入门》文稿，对深度强化学习的当前发展和未来趋势进行了系统性的总结和介绍。</p>
+                                        <p style="font-family: Helvetica;line-height: 14px; font-size: 14px;"><a href="https://pse.is/E2HUJ" style="font-weight: bold; text-decoration: none;" target="_blank">>> Keep Reading</a></p>
+                                    </li>
+                                    <p style="color: #222222; font-family:  Helvetica; font-weight: bold; line-height: 18px; font-size: 14px;">【上手】 如何在TensorFlow 2.0中构建强化学习智能体</p>
+                                    <li style="margin:0 0 10px 30px;" class="list-item-first">
+                                        <p style="font-family: Helvetica;line-height: 14px; font-size: 14px;"><a href="https://pse.is/ETGJG" style="font-weight: bold; text-decoration: none;" target="_blank">>> Keep Reading</a></p>
+                                    </li>
+                                </ul>
+                                <ul style="padding: 0; margin: 0 0 10px 0px; list-style-type: none;">
+                                    <p style="color: #222222; font-family:  Helvetica; font-weight: bold; line-height: 18px; font-size: 14px;">【入门资料】</p>
+                                    <li style="margin:0 0 10px 30px; font-family: Helvetica; line-height: 12px; font-size: 12px;" class="list-item-first"><a href="https://www.coursera.org/learn/machine-learning" style="text-decoration: none;" target="_blank">Machine Learning</a> by&nbsp;Andrew Ng -&nbsp;Ccoursera</li>
+                                    <li style="margin:0 0 10px 30px; font-family: Helvetica; line-height: 12px; font-size: 12px;"><a href="https://www.udacity.com/course/deep-learning--ud730" style="text-decoration: none;" target="_blank">Deep Learning</a> by Google - Udacity</li>
+                                    <li style="margin:0 0 10px 30px; font-family: Helvetica; line-height: 12px; font-size: 12px;"><a href="https://www.udacity.com/course/knowledge-based-ai-cognitive-systems--ud409" style="text-decoration: none;" target="_blank">Knowledge Based</a><a href="https://www.udacity.com/course/knowledge-based-ai-cognitive-systems--ud409"> AI: Cognitive Systems (CS7637)</a> by&nbsp;Georgia Tech - Udacity</li>
+                                    <li style="margin:0 0 10px 30px; font-family: Helvetica; line-height: 12px; font-size: 12px;"><a href="http://cs231n.stanford.edu/" style="text-decoration: none;" target="_blank">CS231n: Convolutional Neural Networks for Visual Recognition</a> - Stanford</li>
+                                    <li style="margin:0 0 10px 30px; font-family: Helvetica; line-height: 12px; font-size: 12px;"><a href="http://cs224d.stanford.edu/" style="text-decoration: none;" target="_blank">CS224d: Deep Learning for Natural Language Processing</a> - Stanford</li>
+                                    <li style="margin:0 0 10px 30px; font-family: Helvetica; line-height: 12px; font-size: 12px;"><a href="http://web.stanford.edu/class/cs20si/" style="text-decoration: none;" target="_blank">CS20si: Tensorflow for Deep Learning Research</a> - Stanford</li>
+                                    <li style="margin:0 0 10px 30px; font-family: Helvetica; line-height: 12px; font-size: 12px;"><a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" style="text-decoration: none;" target="_blank">Reinforcement Learning</a> - UCL</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- 1 Column Text + Button : END -->
+            <!-- Clear Spacer : BEGIN -->
+            <tr>
+                <td aria-hidden="true" height="40" style="font-size: 0px; line-height: 0px;">
+                    &nbsp;
+                </td>
+            </tr>
+            <!-- Clear Spacer : END -->
+
+            <!-- 1 Column Text : BEGIN -->
+            <tr>
+                <td style="background-color: #ffffff;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                            <td style="padding: 20px; font-family: Helvetica; text-align: center; font-size: 15px; line-height: 20px; color: #555555;">
+                                <p style="margin: 0;">加入我们：chengdudataai@thoughtworks.com</p>
+                            </td>
+                            <td style="padding: 20px; font-family: Helvetica; text-align: center; font-size: 15px; line-height: 20px; color: #555555;">
+                                <img style="width: 120px" src="https://ci5.googleusercontent.com/proxy/4MI4BqVsFDaHO-15A-JN7athtIXG4eQrzlZsisiyXB45Jcig2q2OjVV8GTQSvNA0gAh_Zu_82kPpuL3uU429e0WJ2bHOcn162ZZgUlE6AAK2lQeBD13zzKgO4di-dJ0OgAtdzVdBX3ajDIZAWrDwE1UOZPOCJ9A5PENs=s0-d-e1-ft#https://gallery.mailchimp.com/67a2be2b7229d7cd8768c9a44/images/6625ba25-219d-4468-8cb1-4391aed60aa0.jpeg" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- 1 Column Text : END -->
+            <!-- Clear Spacer : BEGIN -->
+            <tr>
+                <td aria-hidden="true" height="40" style="font-size: 0px; line-height: 0px;">
+                    &nbsp;
+                </td>
+            </tr>
+            <!-- Clear Spacer : END -->
+        </table>
+        <!-- Email Body : END -->
+
+        <!-- Email Footer : BEGIN -->
+        <!--<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 auto;">-->
+            <!--<tr>-->
+                <!--<td style="padding: 20px; font-family: sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: #888888;">-->
+                    <!--<webversion style="color: #cccccc; text-decoration: underline; font-weight: bold;">View as a Web Page</webversion>-->
+                    <!--<br><br>-->
+                    <!--Company Name<br><span class="unstyle-auto-detected-links">123 Fake Street, SpringField, OR, 97477 US<br>(123) 456-7890</span>-->
+                    <!--<br><br>-->
+                    <!--<unsubscribe style="color: #888888; text-decoration: underline;">unsubscribe</unsubscribe>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+        <!-- Email Footer : END -->
+
+        <!--[if mso]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+    </div>
+
+    <!-- Full Bleed Background Section : BEGIN -->
+    <!--<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #333333;">-->
+        <!--<tr>-->
+            <!--<td valign="top">-->
+                <!--<div align="center" style="max-width: 600px; margin: auto;" class="email-container">-->
+                    <!--&lt;!&ndash;[if mso]>-->
+                    <!--<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center">-->
+                        <!--<tr>-->
+                            <!--<td>-->
+                    <!--<![endif]&ndash;&gt;-->
+                    <!--<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">-->
+                        <!--<tr>-->
+                            <!--<td style="padding: 20px; text-align: left; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #ffffff;">-->
+                                <!--<p style="margin: 0;">加入我们：chengdudataai@thoughtworks.com</p>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                    <!--&lt;!&ndash;[if mso]>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--</table>-->
+                    <!--<![endif]&ndash;&gt;-->
+                <!--</div>-->
+            <!--</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <!-- Full Bleed Background Section : END -->
+
+    <!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
+</center>
+</body>
+</html>
